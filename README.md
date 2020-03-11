@@ -7,10 +7,13 @@ As a result, there are two files:
 
 They both use pearson similarity metric from scipy.
 
+## Running
 To run, you need to specify the type (positional argument "user" or "item").
 
+## Data
 The data I am using is critics reviews from rottentomatoes. 
 
+## Results
 To check the quality of the algorithm, I created and added to the dataframe a "test_user", who loved Marvel movies (check the code for detailed profile).
 Here are top-10 results on all systems and versions:
 
