@@ -2,8 +2,8 @@
 Surya told me to not use sklearns' Nearest Neighbors, so I tried making my own similarity matrix, which takes quite a long time (1.5 hours for user-to-user) to compute.
 So i decided, in addition to my own version, to write the second, faster CF, using sklearn (so that TA doesn't need to wait for hours to grade my HW).
 As a result, there are two files:
-  CF.py (my own)
-  fasterCF.py (sklearn)
+  * CF.py (my own)
+  * fasterCF.py (sklearn)
 
 They both use pearson similarity (correlation) metric from scipy.
 
@@ -15,8 +15,8 @@ python3 fasterCF.py item
 ```
 
 ## Data
-The data I am using is critics reviews from rottentomatoes which I personally scraped (file reviews.tsv).
-From initial dataset of 714337 rating points, I removed movies, which received less than 50 reviews, and critics, who reviewed less than 50 movies.
+The data I am using is critics reviews from rottentomatoes which I personally scraped (file reviews.tsv).\\
+From initial dataset of 714337 rating points, I removed movies, which received less than 50 reviews, and critics, who reviewed less than 50 movies.\\
 Resulting dataset has 427677 rating points, for 4038 distinct movies and 1253 critics.
 
 ## Output
