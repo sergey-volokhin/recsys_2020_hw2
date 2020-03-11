@@ -23,7 +23,6 @@ class CF:
             takes in pandas dataframe with columns ['critic_id', 'movie_id', 'score']
             constructs the KNN model with pearson similarity distance
         '''
-
         if self.user_based:
             index_on = 'critic_id'
             columns = 'movie_id'
@@ -31,7 +30,7 @@ class CF:
             index_on = 'movie_id'
             columns = 'critic_id'
         self.dataset = df.pivot(index=index_on, columns=columns, values='score').fillna(0)
-        print(f'Calculating neighbors')
+        print(f'Calculating similarity matrix')
         matrix = defaultdict(list)
         for ind, item_1 in enumerate(tqdm(self.dataset.index)):
             for item_2 in self.dataset.index[ind+1:]:
@@ -41,7 +40,7 @@ class CF:
         for item in self.dataset.index:
             self.neighbors[item] = sorted(matrix[item], key=lambda x: x[0], reverse=True)[:self.k]
             self.neighbors[item] = [i[1] for i in self.neighbors[item]]
-        print('Neighbors calculated')
+        print('Matrix calculated, neighbors found')
 
     def get_score(self, user_id, movie_id, neighbors):
         '''
@@ -88,7 +87,6 @@ class CF:
                 sim_ij = pearsonr(j_series, subdf)[0]
                 numerator += sim_ij * (r_uj - mu_j)
                 denominator += sim_ij
-
         mu = subdf[subdf != 0].mean()  # mu_u/mu_i
         return mu + numerator / denominator
 
@@ -103,14 +101,14 @@ class CF:
         # if user-based, then get user neighbors and rank every movie for those neigbors
         if self.user_based:
             movies_pool = list(subdf[subdf == 0].index)
-            neighbors = self.neighbors[user_id][:10]
+            neighbors = self.neighbors[user_id][:10]  # 10 is a magic number
         # if item-based, get most likely movies (by taking nearest neighbors for ones user rated highest) and rank them for all users
         else:
             movies_pool = set()
             user_df = self.dataset[user_id]
             top_ranked_movies = user_df[user_df == user_df.max()].index
             for movie in top_ranked_movies:
-                movie_neighbors = self.neighbors[movie][:3]
+                movie_neighbors = self.neighbors[movie][:3]  # 3 is a magic number
                 movies_pool.update(set(movie_neighbors))
             neighbors = 'all'
         for movie_id in tqdm(movies_pool):
@@ -126,7 +124,7 @@ if __name__ == '__main__':
     parser.add_argument('--amount-recommendations', '-k', default=10)
     args = parser.parse_args()
 
-    if args.system=='user':
+    if args.system == 'user':
         model = CF(user_based=True)
         print('USER BASED')
     else:
@@ -134,8 +132,7 @@ if __name__ == '__main__':
         print('ITEM BASED')
 
     print('\nLoading data')
-    datapath = '/home/thejdxfh/rotation/data/rottentomatoes/critics/' if 'thejdxfh' in os.path.expanduser('~') else '/raid6/home/sergey/rotation_2019/critics/'
-    df_reviews = pd.read_csv(datapath+'reviews_unclipped.tsv', sep='\t')[['movie_id', 'critic_id', 'score']].drop_duplicates(subset=['critic_id', 'movie_id'])
+    df_reviews = pd.read_csv(datapath+'reviews.tsv', sep='\t')
     popularity_thres = 50
 
     prev_shape = df_reviews.shape

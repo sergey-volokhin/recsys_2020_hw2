@@ -20,7 +20,7 @@ class fasterCF:
     def fit(self, df):
         '''
             takes in pandas dataframe with columns ['critic_id', 'movie_id', 'score']
-            constructs the KNN model with pearson similarity distance
+            constructs the NN model with correlation distance
         '''
 
         if self.user_based:
@@ -83,7 +83,7 @@ class fasterCF:
         return mu + numerator / denominator
 
     def recommend(self, user_id, k):
-        ''' recommendation function gets scores for all movies and ranks them, giving out top k of them '''
+        ''' recommendation function: gets scores for all (or closest to top-ranked by user) movies and ranks them, giving out top k of them '''
         if self.user_based:
             subdf = self.dataset.loc[user_id]
         else:
@@ -93,7 +93,7 @@ class fasterCF:
         # if user-based, then get user neighbors and rank every movie for those neigbors
         if self.user_based:
             movies_pool = list(subdf[subdf == 0].index)
-            neighbors = self.NN.kneighbors([self.dataset.loc[user_id]], n_neighbors=11)
+            neighbors = self.NN.kneighbors([self.dataset.loc[user_id]], n_neighbors=11)  # 11 is a magic number
             neighbors = list(self.dataset.iloc[neighbors[1][0][1:]].index)
         # if item-based, get most likely movies (by taking nearest neighbors for ones user rated highest) and rank them for all users
         else:
@@ -101,7 +101,7 @@ class fasterCF:
             user_df = self.dataset[user_id]
             top_ranked_movies = user_df[user_df == user_df.max()].index
             for movie in top_ranked_movies:
-                movie_neighbors = self.NN.kneighbors([self.dataset.loc[movie]], n_neighbors=3)
+                movie_neighbors = self.NN.kneighbors([self.dataset.loc[movie]], n_neighbors=3)  # 3 is a magic number
                 movies_pool.update(set(self.dataset.iloc[movie_neighbors[1][0][1:]].index))
             neighbors = 'all'
         for movie_id in tqdm(movies_pool):
@@ -125,8 +125,7 @@ if __name__ == '__main__':
         print('ITEM BASED')
 
     print('\nLoading data')
-    datapath = '/home/thejdxfh/rotation/data/rottentomatoes/critics/' if 'thejdxfh' in os.path.expanduser('~') else '/raid6/home/sergey/rotation_2019/critics/'
-    df_reviews = pd.read_csv(datapath+'reviews_unclipped.tsv', sep='\t')[['movie_id', 'critic_id', 'score']].drop_duplicates(subset=['critic_id', 'movie_id'])
+    df_reviews = pd.read_csv(datapath+'reviews.tsv', sep='\t')
     popularity_thres = 50
 
     prev_shape = df_reviews.shape
@@ -162,9 +161,7 @@ if __name__ == '__main__':
 
     print('Data loaded\n')
 
-    print('Fitting the model')
     model.fit(df_new)
-    print('Model fitted\n')
 
     critic = 'test_user'
     recommendations = enumerate(model.recommend(critic, args.amount_recommendations))
