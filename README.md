@@ -8,7 +8,11 @@ As a result, there are two files:
 They both use pearson similarity metric from scipy.
 
 ## Running
-To run, you need to specify the type (positional argument "user" or "item").
+To run, you need to specify the type (positional argument "user" or "item"):
+```
+python3 CF.py user
+python3 fasterCF.py item
+```
 
 ## Data
 The data I am using is critics reviews from rottentomatoes. 
@@ -19,30 +23,30 @@ Here are top-10 results on all systems and versions:
 
 * fasterCF, item-to-item:
 
-  Movie 1: mad_max_fury_road w score 4.833244733392808
-  Movie 2: the_dark_knight w score 4.826900094143733
-  Movie 3: avengers_endgame w score 4.590863011475688
-  Movie 4: interstellar_2014 w score 4.146119877692023
-  Movie 5: avengers_infinity_war w score 4.132211926349221
-  Movie 6: ant_man_and_the_wasp w score 4.126526283978871
-  Movie 7: captain_marvel w score 4.078982245417843
-  Movie 8: indiana_jones_and_the_kingdom_of_the_crystal_skull w score 4.055704759816217
-  Movie 9: marvels_the_avengers w score 4.01556420233463
-  Movie 10: godzilla_2014 w score 3.8349388674222338
+  * mad_max_fury_road w score 4.833244733392808
+  * the_dark_knight w score 4.826900094143733
+  * avengers_endgame w score 4.590863011475688
+  * interstellar_2014 w score 4.146119877692023
+  * avengers_infinity_war w score 4.132211926349221
+  * ant_man_and_the_wasp w score 4.126526283978871
+  * captain_marvel w score 4.078982245417843
+  * indiana_jones_and_the_kingdom_of_the_crystal_skull w score 4.055704759816217
+  * marvels_the_avengers w score 4.01556420233463
+  * godzilla_2014 w score 3.8349388674222338
 
 
 * fasterCF, user-to-user:
 
-Movie 1: spider_man_into_the_spider_verse w score 5.671013281435961
-Movie 2: marvels_the_avengers w score 5.568935744530494
-Movie 3: the_dark_knight w score 5.538268477630433
-Movie 4: mission_impossible_fallout w score 5.529882483322089
-Movie 5: mad_max_fury_road w score 5.514411941620574
-Movie 6: black_panther_2018 w score 5.495419424517688
-Movie 7: war_for_the_planet_of_the_apes w score 5.446767041038895
-Movie 8: the_jungle_book_2016 w score 5.4392351636042715
-Movie 9: thor_ragnarok_2017 w score 5.407300172665458
-Movie 10: guardians_of_the_galaxy w score 5.380702715960557
+  * spider_man_into_the_spider_verse w score 5.671013281435961
+  * marvels_the_avengers w score 5.568935744530494
+  * the_dark_knight w score 5.538268477630433
+  * mission_impossible_fallout w score 5.529882483322089
+  * mad_max_fury_road w score 5.514411941620574
+  * black_panther_2018 w score 5.495419424517688
+  * war_for_the_planet_of_the_apes w score 5.446767041038895
+  * the_jungle_book_2016 w score 5.4392351636042715
+  * thor_ragnarok_2017 w score 5.407300172665458
+  * guardians_of_the_galaxy w score 5.380702715960557
 
 
 
@@ -53,13 +57,13 @@ Movie 10: guardians_of_the_galaxy w score 5.380702715960557
 
 * CF, user-to-user
 
-  Movie 1: inception w score 5.008272528437352
-  Movie 2: 1220551_bounty_hunter w score 5.006577884411386
-  Movie 3: over_the_hedge w score 5.0061926183377095
-  Movie 4: pirates_of_the_caribbean_dead_mans_chest w score 5.006135620190487
-  Movie 5: 10009460_the_road w score 5.005964628029316
-  Movie 6: nick_and_norahs_infinite_playlist w score 5.005817220805755
-  Movie 7: there_will_be_blood w score 5.005800432856403
-  Movie 8: green_lantern w score 5.005702940782325
-  Movie 9: whatever_works w score 5.0056655167421145
-  Movie 10: larry_crowne w score 5.00548967871344
+  * inception w score 5.008272528437352
+  * 1220551_bounty_hunter w score 5.006577884411386
+  * over_the_hedge w core 5.0061926183377095
+  * pirates_of_the_caribbean_dead_mans_chest w score 5.006135620190487
+  * 10009460_the_road w score 5.005964628029316
+  * nick_and_norahs_infinite_playlist w score 5.005817220805755
+  * there_will_be_blood w score 5.005800432856403
+  * green_lantern w score 5.005702940782325
+  * whatever_works w score 5.0056655167421145
+  *  larry_crowne w score 5.00548967871344
