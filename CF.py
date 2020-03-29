@@ -132,7 +132,7 @@ if __name__ == '__main__':
         print('ITEM BASED')
 
     print('\nLoading data')
-    df_reviews = pd.read_csv(datapath+'reviews.tsv', sep='\t')
+    df_reviews = pd.read_csv('reviews.tsv', sep='\t')
     popularity_thres = 50
 
     prev_shape = df_reviews.shape
