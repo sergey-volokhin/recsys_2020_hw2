@@ -34,7 +34,7 @@ class CF:
         matrix = defaultdict(list)
         for ind, item_1 in enumerate(tqdm(self.dataset.index)):
             for item_2 in self.dataset.index[ind+1:]:
-                sim = pearsonr(self.dataset.loc[item_1], self.dataset.loc[item_2])[1]
+                sim = 1 - pearsonr(self.dataset.loc[item_1], self.dataset.loc[item_2])[1]
                 matrix[item_1].append((sim, item_2))
                 matrix[item_2].append((sim, item_1))
         for item in self.dataset.index:
@@ -71,7 +71,7 @@ class CF:
                 r_vi = working_series[v]
                 if r_vi == 0:
                     continue
-                sim_uv = pearsonr(v_series, subdf)[0]
+                sim_uv = 1 - pearsonr(v_series, subdf)[0]
                 numerator += sim_uv * (r_vi - mu_v)
                 denominator += sim_uv
         else:
@@ -84,7 +84,7 @@ class CF:
                 r_uj = working_series[j]
                 if r_uj == 0:
                     continue
-                sim_ij = pearsonr(j_series, subdf)[0]
+                sim_ij = 1 - pearsonr(j_series, subdf)[0]
                 numerator += sim_ij * (r_uj - mu_j)
                 denominator += sim_ij
         mu = subdf[subdf != 0].mean()  # mu_u/mu_i
